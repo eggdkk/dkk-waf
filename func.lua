@@ -8,11 +8,9 @@ local cookie_file = log_path .. "cookie.log";
     @return
 ]]
 
-function write(logfile, msg)
-    local fd = io.open(logfile, "ab")
-    if not fd then
-        return
-    end
+function write(logfile,msg)
+    local fd = io.open(logfile,"ab")
+    if fd == nil then return end
     fd:write(msg)
     fd:flush()
     fd:close()
