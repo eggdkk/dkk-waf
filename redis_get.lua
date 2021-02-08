@@ -26,7 +26,6 @@ if request_uri == sign_in_url then
     local vulnerable_app_session = string.match(res, "vulnerable_app_session=(.-);");
 
     local student_id  = string.match(res, "student_id=(.-);");
-    if
     write(cookie_file,ngx.md5(student_id) .. ":" .. ngx.md5(vulnerable_app_session).."\n");
     --local handler
     --handler = function (session,id)
