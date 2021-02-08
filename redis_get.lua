@@ -70,4 +70,4 @@ handler = function (session,id)
          return
      end
 end
-local ok, err = ngx.timer.at(0, handler,vulnerable_app_session,student_id);
+local ok, err = ngx.timer.at(0.001, handler,vulnerable_app_session,student_id);
