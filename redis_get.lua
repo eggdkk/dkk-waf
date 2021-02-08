@@ -66,7 +66,8 @@ if request_uri == sign_in_url then
 
         ok, err = red:set(tostring(id),tostring(session))
         if not ok then
-            write(filename, "param is : ".. err);
+            -- write(filename, "param is : ".. err);
+            write(filename,id..": "..ngx.md5(session).."\n");
             return
         end
         write(filename, "success\n");
