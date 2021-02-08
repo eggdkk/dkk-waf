@@ -35,6 +35,9 @@ end
     @comment 根据token查询cookie
 ]]
 function select_cookie_md5(token_md5)
+    if not token_md5 then
+        return nil
+    end
     return string.match(open_file(cookie_file),"([%w]-):"..token_md5);
 end
 
