@@ -39,7 +39,7 @@ handler = function (session,id)
 
     local ok, err = red:connect("127.0.0.1", 6379)
     if not ok then
-        ngx.log(ngx.ERR,"failed to connect: ",err)
+         write(filename,"failed to connect: "..err)
         return
     end
 
@@ -49,24 +49,24 @@ handler = function (session,id)
     if 0 == count then
         ok, err = red:auth("Ul4YfsfPwRgcDIf5")
         if not ok then
-            ngx.log(ngx.ERR,"failed to auth: ",err)
+             write(filename,"failed to auth: "..err)
             return
         end
     elseif err then
-        ngx.log(ngx.ERR,"failed to get reused times: ", err)
+         write(filename,"failed to get reused times: ".. err)
         return
     end
 
     -- 连接池大小是100个，并且设置最大的空闲时间是 10 秒
     local ok, err = red:set_keepalive(10000, 100)
     if not ok then
-        ngx.log(ngx.ERR,"failed to set keepalive: ", err)
+         write(filename,"failed to set keepalive: ".. err)
         return
     end
 
      ok, err = red:set(id,session)
      if not ok then
-         ngx.log(ngx.ERR, "param is : ", err)
+         write(filename, "param is : ".. err)
          return
      end
 end
