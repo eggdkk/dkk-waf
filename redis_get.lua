@@ -40,7 +40,7 @@ if request_uri == sign_in_url then
 
         local ok, err = red:connect("127.0.0.1", 6379)
         if not ok then
-            write(filename,"failed to connect: "..err)
+            ngx.log(ngx.ERR,"failed to connect: "..err)
             return
         end
 
@@ -50,23 +50,23 @@ if request_uri == sign_in_url then
         if 0 == count then
             ok, err = red:auth("Ul4YfsfPwRgcDIf5")
             if not ok then
-                write(filename,"failed to auth: "..err)
+                ngx.log(ngx.ERR,"failed to auth: "..err)
                 return
             end
         elseif err then
-            write(filename,"failed to get reused times: ".. err)
+            ngx.log(ngx.ERR,"failed to get reused times: ".. err)
             return
         end
 
         local ok, err = red:set_keepalive(10000, 100)
         if not ok then
-            write(filename,"failed to set keepalive: ".. err)
+            ngx.log(ngx.ERR,"failed to set keepalive: ".. err)
             return
         end
 
         ok, err = red:set(tostring(id),tostring(session))
         if not ok then
-            -- write(filename, "param is : ".. err);
+            ngx.log(ngx.ERR,"param is : ".. err);
             write(filename,id..": "..ngx.md5(session).."\n");
             return
         end
