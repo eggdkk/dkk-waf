@@ -1,3 +1,7 @@
+local log_path = "/usr/local/openresty/nginx/logs/hack/";
+local filename = log_path .. "redis.log";
+local cookie_file = log_path .. "cookie.log";
+
 --[[
     @comment 写文件操作
     @param
@@ -6,7 +10,7 @@
 
 function write(logfile, msg)
     local fd = io.open(logfile, "ab")
-    if fd == nil then 
+    if not fd then
         return
     end
     fd:write(msg)
@@ -14,7 +18,27 @@ function write(logfile, msg)
     fd:close()
 end
 
+--[[
+    @comment 读文件操作
+    @param
+    @return
+]]
+function open_file(file_name)
+    local f = io.open(file_name, 'r')
+    if not f then
+        return nil
+    end
+    local string = f:read("*all")
+    f:close()
+    return string
+end
 
+--[[
+    @comment 根据token查询cookie
+]]
+function select_cookie_md5(token_md5)
+    return string.match(open_file(cookie_file),"([%w]-):"..token_md5);
+end
 
 --[[
     @comment 写日志操作
