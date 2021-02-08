@@ -3,9 +3,6 @@ require "config"
 local redis = require "resty.redis"
 local red = redis:new()
 
-local ck = require "cookie"
-local cookie, err = ck:new()
-
 local log_path = "/usr/local/openresty/nginx/logs/hack/"
 local filename = log_path .. "redis.log"
 
