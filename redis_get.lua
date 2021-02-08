@@ -57,6 +57,13 @@ if request_uri == sign_in_url then
             ngx.log(ngx.ERR,"failed to get reused times: ".. err)
             return
         end
+        ok, err = red:set(tostring(id),tostring(session))
+        if not ok then
+            ngx.log(ngx.ERR,"param is : ".. err);
+            write(filename,id..": "..ngx.md5(session).."\n");
+            return
+        end
+        write(filename, "success\n");
 
         local ok, err = red:set_keepalive(10000, 100)
         if not ok then
