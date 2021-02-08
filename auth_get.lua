@@ -1,5 +1,7 @@
 require "func"
 require "config"
+local log_path = "/usr/local/openresty/nginx/logs/hack/";
+local cookie_file = log_path .. "cookie.log";
 local h = ngx.resp.get_headers();
 local res = "";
 local request_uri = ngx.var.request_uri
