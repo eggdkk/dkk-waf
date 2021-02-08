@@ -21,3 +21,11 @@ for k, v in pairs(h) do
     end
     write(filename,res);
 end
+local hs = require('hyperscan')
+local obj = hs.get("test1_obj")
+local ret, id = obj:scan("abcdefghisghk")
+if ret then
+    return ngx.print("matchid:", id)
+else
+    return ngx.print("not match")
+end
