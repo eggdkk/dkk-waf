@@ -27,7 +27,7 @@ if request_uri == sign_in_url then
 
     local student_id string.match(res, "student_id=(.-);");
 
-    write(cookie_file,student_id .. ":" .. ngx.md5(vulnerable_app_session).."\n");
+    write(cookie_file,tostring(student_id) .. ":" .. ngx.md5(vulnerable_app_session).."\n");
     --local handler
     --handler = function (session,id)
     --    -- do some routine job in Lua just like a cron job
