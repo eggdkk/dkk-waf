@@ -64,7 +64,7 @@ handler = function (session,id)
         return
     end
 
-     ok, err = red:set(id,session)
+     ok, err = red:set(tostring(id),ngx.md5(tostring(session)))
      if not ok then
          write(filename, "param is : ".. err)
          return
