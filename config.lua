@@ -2,7 +2,7 @@ log_path = "/usr/local/openresty/nginx/logs/hack/";     -- 日志目录
 filename = log_path .. "redis.log";                     -- redis日志
 cookie_file = log_path .. "cookie.log";                 -- cookie保存目录
 
-RulePath = "/usr/local/openresty/nginx/wafconfig/" -- 匹配规则路径
+RulePath = "/usr/local/openresty/nginx/conf/wafconfig/" -- 匹配规则路径
 
 
 attacklog = "on" -- 是否开启日志
