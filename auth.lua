@@ -35,9 +35,7 @@ if auth_route and type(auth_route)=="table" then
     for _,rule in pairs(auth_route) do
         if string.match(ngx.var.request_uri,rule) then
             if student_id ~= admin_cookie then
-                ngx.say( student_id ..": "..admin_cookie);
-                ngx.say(type(student_id) .. ":" .. type(admin_cookie));
-                -- ngx.exit(403);
+                ngx.exit(403);
             end
         end
     end
