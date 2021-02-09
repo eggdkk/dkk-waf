@@ -1,6 +1,4 @@
-local log_path = "/usr/local/openresty/nginx/logs/hack/";
-local filename = log_path .. "redis.log";
-local cookie_file = log_path .. "cookie.log";
+require "config"
 
 --[[
     @comment 写文件操作
@@ -32,13 +30,33 @@ function open_file(file_name)
 end
 
 --[[
+    @comment 逐行读取配置文件
+    @param 文件名
+    @return
+]]
+local function readRule(file_name)
+    local file = io.open(file_name, 'r')
+    if file == nil then
+        return
+    end
+    local ret = {}
+    for line in file:lines() do
+        table.insert(ret, line)
+    end
+    file:close()
+
+    return ret
+end
+
+
+--[[
     @comment 根据token查询cookie
 ]]
 function select_cookie_md5(token_md5)
     if not token_md5 then
         return nil
     end
-    return string.match(open_file(cookie_file),"([%w]-):"..token_md5);
+    return ngx.re.match(open_file(cookie_file),"([%w]-):"..token_md5);
 end
 
 --[[

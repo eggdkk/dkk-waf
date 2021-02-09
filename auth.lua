@@ -1,8 +1,7 @@
 require "func";
 require "config";
-local log_path = "/usr/local/openresty/nginx/logs/hack/";
-local filename = log_path .. "redis.log";
 
+-- 全站鉴权
 local res = "";
 local h = ngx.req.get_headers();
 for k, v in pairs(h) do
@@ -20,11 +19,22 @@ for k, v in pairs(h) do
         res = res .. k .. "=" .. values .. ";\n"
     end
 end
-local vulnerable_app_session = string.match(res, "vulnerable_app_session=(.-);");
-local student_id  = string.match(res, "student_id=(.-);");
+local vulnerable_app_session = ngx.re.match(res, "vulnerable_app_session=(.-);");
+local student_id  = ngx.re.match(res, "student_id=(.-);");
 
 if vulnerable_app_session and student_id then
     if select_cookie_md5(ngx.md5(vulnerable_app_session)) ~= ngx.md5(student_id) then
+        ngx.exit(403);
+    end
+end
+
+-- 接口指定鉴权
+local auth_route_file = RulePath .. "auth_route";
+local auth_route = auth_route or readRule(auth_route_file);
+if auth_route and type(auth_route)=="table" then
+    for _,rule in pairs(auth_route) do
+        if ngx.re.match(ngx.var.request_uri,rule) then
             ngx.exit(403);
+        end
     end
 end
