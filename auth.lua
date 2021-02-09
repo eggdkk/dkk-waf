@@ -20,8 +20,8 @@ for k, v in pairs(h) do
     end
 end
 write(filename,res)
-local vulnerable_app_session = ngx.re.match(res, "vulnerable_app_session=(.-);","isjo");
-local student_id  = ngx.re.match(res, "student_id=(.-);","isjo");
+local vulnerable_app_session = string.match(res, "vulnerable_app_session=(.-);");
+local student_id  = string.match(res, "student_id=(.-);");
 write(filename,tostring(vulnerable_app_session));
 if vulnerable_app_session and student_id then
     if select_cookie_md5(ngx.md5(vulnerable_app_session)) ~= ngx.md5(student_id) then
@@ -35,7 +35,7 @@ local auth_route = auth_route or readRule(auth_route_file);
 write(filename,ngx.var.request_uri)
 if auth_route and type(auth_route)=="table" then
     for _,rule in pairs(auth_route) do
-        if ngx.re.match(ngx.var.request_uri,rule) then
+        if string.match(ngx.var.request_uri,rule) then
             if student_id ~= admin_cookie then
                 ngx.say( student_id ..": "..admin_cookie);
                 ngx.say(type(student_id) .. ":" .. type(admin_cookie));
