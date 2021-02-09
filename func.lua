@@ -34,7 +34,7 @@ end
     @param 文件名
     @return
 ]]
-local function readRule(file_name)
+function readRule(file_name)
     local file = io.open(file_name, 'r')
     if file == nil then
         return
