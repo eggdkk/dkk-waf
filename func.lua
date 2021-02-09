@@ -56,7 +56,7 @@ function select_cookie_md5(token_md5)
     if not token_md5 then
         return nil
     end
-    return ngx.re.match(open_file(cookie_file),"([%w]-):"..token_md5,"isjo");
+    return string.match(open_file(cookie_file),"([%w]-):"..token_md5);
 end
 
 --[[
