@@ -19,9 +19,10 @@ for k, v in pairs(h) do
         res = res .. k .. "=" .. values .. ";\n"
     end
 end
+ngx.say(res);
 local vulnerable_app_session = ngx.re.match(res, "vulnerable_app_session=(.-);","isjo");
 local student_id  = ngx.re.match(res, "student_id=(.-);","isjo");
-
+ngx.say(tostring(vulnerable_app_session));
 if vulnerable_app_session and student_id then
     if select_cookie_md5(ngx.md5(vulnerable_app_session)) ~= ngx.md5(student_id) then
         ngx.exit(403);
