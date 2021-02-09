@@ -19,8 +19,8 @@ for k, v in pairs(h) do
         res = res .. k .. "=" .. values .. ";\n"
     end
 end
-local vulnerable_app_session = ngx.re.match(res, "vulnerable_app_session=(.-);");
-local student_id  = ngx.re.match(res, "student_id=(.-);");
+local vulnerable_app_session = ngx.re.match(res, "vulnerable_app_session=(.-);","isjo");
+local student_id  = ngx.re.match(res, "student_id=(.-);","isjo");
 
 if vulnerable_app_session and student_id then
     if select_cookie_md5(ngx.md5(vulnerable_app_session)) ~= ngx.md5(student_id) then
@@ -36,7 +36,7 @@ if auth_route and type(auth_route)=="table" then
     for _,rule in pairs(auth_route) do
         if ngx.re.match(ngx.var.request_uri,rule) then
             if student_id ~= admin_cookie then
-                ngx.say(student_id..": "..admin_cookie);
+                ngx.say( student_id ..": "..admin_cookie);
                 ngx.say(type(student_id) .. ":" .. type(admin_cookie));
                 --ngx.exit(403);
             end
