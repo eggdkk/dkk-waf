@@ -85,9 +85,9 @@ function wafLog(data, rule_tag)
         local servername = ngx.var.server_name
         local time = ngx.localtime()
         if ua then
-            line = '{"realIp":"'..realIp .. '", "time":"' .. time .. '","request_method":,"' .. request_method .. '", "url":' .. servername .. url .. '","ua":"'.. ua ..'","data":"' .. data .. '", "ruletag":"' .. rule_tag .. '"}';
+            line = '{"realIp":"'..realIp .. '", "time":"' .. time .. '","request_method":"' .. request_method .. '", "url":' .. servername .. url .. '","ua":"'.. ua ..'","data":"' .. data .. '", "ruletag":"' .. rule_tag .. '"}\n';
         else
-            line = '{"realIp":"'..realIp .. '", "time":"' .. time .. '","request_method":,"' .. request_method .. '", "url":' .. servername .. url .. '","data":"' .. data .. '", "ruletag":"' .. rule_tag .. '"}';
+            line = '{"realIp":"'..realIp .. '", "time":"' .. time .. '","request_method":"' .. request_method .. '", "url":' .. servername .. url .. '","data":"' .. data .. '", "ruletag":"' .. rule_tag .. '"}\n';
         end
  
         local filename = log_path .. "/response.log"
