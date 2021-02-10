@@ -5,7 +5,7 @@ cookie_file = log_path .. "cookie.log";                 -- cookie保存目录
 rule_path = "/usr/local/openresty/nginx/conf/wafconfig/" -- 匹配规则路径
 admin_cookie = "195300"
 
-attacklog = "on" -- 是否开启日志
+attack_log = "on" -- 是否开启日志
 logdir = "./logs/hack/" -- 日志目录
 UrlDeny = "on" -- 是否检测url
 CookieMatch = "on" -- 是否检测cookie

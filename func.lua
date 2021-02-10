@@ -58,24 +58,36 @@ function select_cookie_md5(token_md5)
     end
     return string.match(open_file(cookie_file),"([%w]-):"..token_md5);
 end
+--[[
+    @comment 获取客户端ip
+]]
+function getClientIp()
+    IP  = ngx.var.remote_addr
+    if IP == nil then
+        IP  = "unknown"
+    end
+    return IP
+end
+
+local optionIsOn = function (options) return options == "on" and true or false end
 
 --[[
     @comment 写日志操作
     @param
     @return
 ]]
-function wafLog(data, ruletag)
+function wafLog(data, rule_tag)
     local request_method = ngx.req.get_method()
     local url = ngx.var.request_uri
-    if optionIsOn(attacklog) then
+    if optionIsOn(attack_log) then
         local realIp = getClientIp()
         local ua = ngx.var.http_user_agent
         local servername = ngx.var.server_name
         local time = ngx.localtime()
         if ua then
-            line = realIp .. " [" .. time .. "] \"" .. request_method .. " " .. servername .. url .. "\" \"" .. data .. "\"  \"" .. ua .. "\" \"" .. ruletag .. "\"\n"
+            line = '{"realIp":"'..realIp .. '", "time":"' .. time .. '","request_method":,"' .. request_method .. '", "url":' .. servername .. url .. '","ua":"'.. ua ..'","data":"' .. data .. '", "ruletag":"' .. rule_tag .. '"}';
         else
-            line = realIp .. " [" .. time .. "] \"" .. request_method .. " " .. servername .. url .. "\" \"" .. data .. "\" - \"" .. ruletag .. "\"\n"
+            line = '{"realIp":"'..realIp .. '", "time":"' .. time .. '","request_method":,"' .. request_method .. '", "url":' .. servername .. url .. '","data":"' .. data .. '", "ruletag":"' .. rule_tag .. '"}';
         end
  
         local filename = log_path .. "/response.log"
