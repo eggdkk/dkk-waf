@@ -24,7 +24,10 @@ local student_id  = string.match(res, "student_id=(.-);");
 if vulnerable_app_session and student_id then
     if select_cookie_md5(ngx.md5(vulnerable_app_session)) ~= ngx.md5(student_id) then
         wafLog(student_id,"篡改Cookie");
-        ngx.header["Set-Cookie"] = "";
+        ngx.header["Set-Cookie"] = {
+            'student_id=; Path=/; Max-Age=0',
+            'vulnerable_app_session=; Path=/; Max-Age=0'
+        };
         ngx.exit(403);
     end
 end
@@ -37,7 +40,10 @@ if auth_route and type(auth_route)=="table" then
         if string.match(ngx.var.request_uri,rule) then
             if student_id ~= admin_cookie then
                 wafLog(student_id,"普通用户请求管理员接口");
-                ngx.header["Set-Cookie"] = "";
+                ngx.header["Set-Cookie"] = {
+                    'student_id=; Path=/; Max-Age=0',
+                    'vulnerable_app_session=; Path=/; Max-Age=0'
+                };
                 ngx.exit(403);
             end
         end
