@@ -24,6 +24,7 @@ local student_id  = string.match(res, "student_id=(.-);");
 if vulnerable_app_session and student_id then
     if select_cookie_md5(ngx.md5(vulnerable_app_session)) ~= ngx.md5(student_id) then
         wafLog(student_id,"篡改Cookie");
+        ngx.header.cookie = "";
         ngx.exit(403);
     end
 end
@@ -31,12 +32,12 @@ end
 -- 接口指定鉴权
 local auth_route_file = rule_path .. "auth_route";
 local auth_route = auth_route or readRule(auth_route_file);
-write(filename,ngx.var.request_uri)
 if auth_route and type(auth_route)=="table" then
     for _,rule in pairs(auth_route) do
         if string.match(ngx.var.request_uri,rule) then
             if student_id ~= admin_cookie then
                 wafLog(student_id,"普通用户请求管理员接口");
+                ngx.header.cookie = "";
                 ngx.exit(403);
             end
         end
