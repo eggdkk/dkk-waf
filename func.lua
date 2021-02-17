@@ -62,12 +62,17 @@ end
 --[[
     @comment 获取客户端ip
 ]]
-function getClientIp()
-    IP  = ngx.var.remote_addr
-    if IP == nil then
-        IP  = "unknown"
-    end
-    return IP
+--function getClientIp()
+--    IP  = ngx.var.remote_addr
+--    if IP == nil then
+--        IP  = "unknown"
+--    end
+--    return IP
+--end
+function get_client_ip()
+    local headers=ngx.req.get_headers()
+    local ip=headers["X-REAL-IP"] or headers["X_FORWARDED_FOR"] or ngx.var.remote_addr or "0.0.0.0"
+    return ip
 end
 
 local optionIsOn = function (options) return options == "on" and true or false end
@@ -81,7 +86,7 @@ function wafLog(data, rule_tag)
     local request_method = ngx.req.get_method()
     local url = ngx.var.request_uri
     if optionIsOn(attack_log) then
-        local realIp = get_client_ip()
+        local realIp = get_client_ip();
         local ua = ngx.var.http_user_agent
         local local_time = ngx.localtime()
         local time =ngx.now()*1000
