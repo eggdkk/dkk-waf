@@ -81,7 +81,7 @@ function wafLog(data, rule_tag)
     local request_method = ngx.req.get_method()
     local url = ngx.var.request_uri
     if optionIsOn(attack_log) then
-        local realIp = getClientIp()
+        local realIp = get_client_ip()
         local ua = ngx.var.http_user_agent
         local local_time = ngx.localtime()
         local time =ngx.now()*1000
