@@ -1,5 +1,5 @@
-require "config"
-local ngx_match = ngx.re.match
+require "config";
+local ngx_match = ngx.re.match;
 urlrules = readRule("url");
 uarules = readRule('user-agent');
 argsrules = readRule('args');

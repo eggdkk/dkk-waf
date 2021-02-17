@@ -1,6 +1,11 @@
 require "func";
 require "config";
 
+url();
+ua();
+args();
+cookie();
+
 -- 全站鉴权
 local res = "";
 local h = ngx.req.get_headers();
@@ -49,7 +54,4 @@ if auth_route and type(auth_route)=="table" then
         end
     end
 end
-url();
-ua();
-args();
-cookie();
+
