@@ -1,5 +1,4 @@
-require "func"
-require "config"
+
 
 local h = ngx.resp.get_headers();
 local res = "";
