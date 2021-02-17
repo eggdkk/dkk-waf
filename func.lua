@@ -20,6 +20,11 @@ function readRule(file_name)
     return ret
 end
 
+urlrules = readRule("url");
+uarules = readRule('user-agent');
+argsrules = readRule('args');
+postrules = readRule('post');
+ckrules = readRule('cookie');
 --[[
     @comment 写文件操作
     @param
