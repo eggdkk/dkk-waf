@@ -1,6 +1,6 @@
 require "config";
 local ngx_match = ngx.re.match;
-
+local unescape=ngx.unescape_uri;
 --[[
     @comment 逐行读取配置文件
     @param 文件名
