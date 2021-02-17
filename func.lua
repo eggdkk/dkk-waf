@@ -1,10 +1,24 @@
 require "config";
 local ngx_match = ngx.re.match;
-urlrules = readRule("url");
-uarules = readRule('user-agent');
-argsrules = readRule('args');
-postrules = readRule('post');
-ckrules = readRule('cookie');
+
+--[[
+    @comment 逐行读取配置文件
+    @param 文件名
+    @return
+]]
+function readRule(file_name)
+    local file = io.open(rule_path .. file_name, 'r')
+    if file == nil then
+        return
+    end
+    local ret = {}
+    for line in file:lines() do
+        table.insert(ret, line)
+    end
+    file:close()
+
+    return ret
+end
 
 --[[
     @comment 写文件操作
@@ -34,26 +48,6 @@ function open_file(file_name)
     f:close()
     return string
 end
-
---[[
-    @comment 逐行读取配置文件
-    @param 文件名
-    @return
-]]
-function readRule(file_name)
-    local file = io.open(rule_path .. file_name, 'r')
-    if file == nil then
-        return
-    end
-    local ret = {}
-    for line in file:lines() do
-        table.insert(ret, line)
-    end
-    file:close()
-
-    return ret
-end
-
 
 --[[
     @comment 根据token查询cookie
@@ -198,3 +192,5 @@ function cookie()
     end
     return false
 end
+
+

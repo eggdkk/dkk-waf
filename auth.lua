@@ -1,10 +1,12 @@
 require "func";
 require "config";
+
 urlrules = readRule("url");
 uarules = readRule('user-agent');
 argsrules = readRule('args');
 postrules = readRule('post');
 ckrules = readRule('cookie');
+
 url();
 ua();
 args();
