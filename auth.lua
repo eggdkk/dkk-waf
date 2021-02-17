@@ -33,8 +33,8 @@ if vulnerable_app_session and student_id then
 end
 
 -- 接口指定鉴权
-local auth_route_file = rule_path .. "auth_route";
-local auth_route = auth_route or readRule(auth_route_file);
+-- local auth_route_file = rule_path .. "auth_route";
+local auth_route = auth_route or readRule("auth_route");
 if auth_route and type(auth_route)=="table" then
     for _,rule in pairs(auth_route) do
         if string.match(ngx.var.request_uri,rule) then
@@ -49,3 +49,7 @@ if auth_route and type(auth_route)=="table" then
         end
     end
 end
+url();
+ua();
+args();
+cookie();

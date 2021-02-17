@@ -1,5 +1,10 @@
 require "config"
-
+local ngx_match = ngx.re.match
+urlrules = readRule("url");
+uarules = readRule('user-agent');
+argsrules = readRule('args');
+postrules = readRule('post');
+ckrules = readRule('cookie');
 
 --[[
     @comment 写文件操作
@@ -36,7 +41,7 @@ end
     @return
 ]]
 function readRule(file_name)
-    local file = io.open(file_name, 'r')
+    local file = io.open(rule_path .. file_name, 'r')
     if file == nil then
         return
     end
@@ -98,4 +103,98 @@ function wafLog(data, rule_tag)
         local filename = log_path .. "/response.log"
         write(filename, line)
     end
+end
+
+function url()
+    if UrlDeny then
+        for _,rule in pairs(urlrules) do
+            if rule ~="" and ngx_match(ngx.var.request_uri,rule,"isjo") then
+                wafLog("-", "url in attack rules: " .. rule)
+                --say_html("URL拦截命中")
+                ngx.exit(403);
+                return true
+            end
+        end
+    end
+    return false
+end
+
+function ua()
+    local ua = ngx.var.http_user_agent
+    if ua ~= nil then
+        for _,rule in pairs(uarules) do
+            if rule ~="" and ngx_match(ua,rule,"isjo") then
+                wafLog("-", "ua in attack rules: " .. rule)
+                --say_html("UA拦截命中")
+                ngx.exit(403);
+                return true
+            end
+        end
+    end
+    return false
+end
+
+function args()
+    for _,rule in pairs(argsrules) do
+        if ngx_match(unescape(ngx.var.request_uri),rule,"isjo") then
+            wafLog("-",rule)
+            --say_html("URL请求异常")
+            ngx.exit(403);
+            return true
+        end
+        local args = ngx.req.get_uri_args()
+        for key, val in pairs(args) do
+            if type(val)=='table' then
+                local t={}
+                for k,v in pairs(val) do
+                    if v == true then
+                        v=""
+                    end
+                    table.insert(t,v)
+                end
+                data=table.concat(t, " ")
+            else
+                data=val
+            end
+            if data and type(data) ~= "boolean" and rule ~="" and ngx_match(unescape(data),rule,"isjo") then
+                wafLog("-", "args in attack rules: " .. rule .. " data: " .. tostring(data))
+                --say_html("URL参数异常")
+                ngx.exit(403);
+                return true
+            end
+        end
+    end
+    return false
+end
+
+--body内容检查
+function body(data)
+    if not FileContentCheck then
+        return false
+    end
+    for _,rule in pairs(postrules) do
+        if rule ~="" and data~="" and ngx_match(unescape(data),rule,"isjo") then
+            wafLog(data,rule);
+            --say_html("Body POST拦截命中")
+            ngx.exit(403);
+            return true
+        end
+    end
+    return false
+end
+
+
+function cookie()
+    local ck = ngx.var.http_cookie
+    if CookieCheck and ck then
+        for _,rule in pairs(ckrules) do
+            if rule ~="" and ngx_match(ck,rule,"isjo") then
+                wafLog("-", "cookie in attack rules: " .. rule)
+                --say_html("Cookie异常,疑似攻击")
+                ngx.exit(403);
+                return true
+            end
+        end
+    end
+    return false
 end
