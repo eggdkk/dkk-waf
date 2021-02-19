@@ -9,7 +9,8 @@ url();
 ua();
 args();
 cookie();
-
+block_ip();
+white_ip();
 -- 全站鉴权
 local res = "";
 local h = ngx.req.get_headers();
