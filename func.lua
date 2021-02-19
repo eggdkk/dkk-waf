@@ -126,7 +126,7 @@ function ua()
     local ua = ngx.var.http_user_agent
     if ua ~= nil then
         for _,rule in pairs(uarules) do
-            if rule ~="" and string.match(string.lower(ua),rule) then
+            if rule ~="" and ngx.re.match(ua,rule,"isjo") then
                 wafLog("-", "ua in attack rules: " .. rule)
                 --say_html("UA拦截命中")
                 ngx.exit(403);
