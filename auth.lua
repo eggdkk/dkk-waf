@@ -5,7 +5,7 @@ uarules = readRule('user-agent');
 argsrules = readRule('args');
 postrules = readRule('post');
 ckrules = readRule('cookie');
-url();
+url(urlrules);
 ua();
 args();
 cookie();

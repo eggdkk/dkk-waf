@@ -1,6 +1,6 @@
 require "config";
 
-local ngx_match = string.match;
+local ngx_match = ngx.re.match;
 local unescape=ngx.unescape_uri;
 local optionIsOn = function (options) return options == "on" and true or false end
 
@@ -105,9 +105,9 @@ function wafLog(data, rule_tag)
     end
 end
 
-function url()
+function url(url_rules)
     if UrlDeny then
-        for _,rule in pairs(urlrules) do
+        for _,rule in pairs(url_rules) do
             if rule ~="" and string.match(ngx.var.request_uri,rule) then
                 wafLog("-", "url in attack rules: " .. rule)
                 --say_html("URL拦截命中")
