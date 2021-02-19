@@ -108,7 +108,7 @@ end
 function url(url_rules)
     if UrlDeny then
         for _,rule in pairs(url_rules) do
-            local m, err = ngx.re.match("Tinywan, 1234", "([0-9])[0-9]+");
+            local m, err = ngx.re.match(ngx.var.request_uri,rule);
             write(log_path.."bug.txt",m[0])
             --write(log_path.."bug.txt",tostring(ngx.re.match(ngx.var.request_uri,rule,"isjo")).."\n"..ngx.var.request_uri.."\n");
             if rule ~="" and ngx.re.match(ngx.var.request_uri,rule,"isjo") then
