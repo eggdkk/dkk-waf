@@ -29,15 +29,4 @@ CCDeny="on"
 urlCCrate="2000/60"
 -- ip访问特定url频率（次/秒）
 ipCCrate="3000/60"
--- 访问ip频次检测（次/秒）,该值应该是urlCCrate的5-20倍左右
-
-
-
---
---UrlDeny = "on" -- 是否检测url
---CookieMatch = "on" -- 是否检测cookie
---postMatch = "on" -- 是否检测post参数
---whiteModule = "on" -- 是否检测url白名单
---black_fileExt = {"php","jsp"} -- 上传文件后缀检测
---
-
+-- 访问ip频次检测（次/秒）
