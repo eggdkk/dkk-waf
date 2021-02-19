@@ -101,7 +101,7 @@ function wafLog(data, rule_tag)
             line = '{"id":'..time..',"realIp":"'..realIp .. '", "time":"' .. local_time .. '","request_method":"' .. request_method .. '", "url":"' .. url .. '","data":"' .. data .. '", "ruletag":"' .. rule_tag .. '"}\n';
         end
         local filename = log_path .. "/response.log"
-        write(filename, line)
+        write(filename, line);
     end
 end
 
