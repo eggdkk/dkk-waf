@@ -276,6 +276,7 @@ function block_ip()
             local x, j = string.find(ip, '/', 0, true)
             --IP字符串中不存在"-"、"/"等划分网段标识
             if s == nil and x == nil and cIP == ip then
+                wafLog("-","IP黑名单配置错误");
                 ngx.exit(403)
                 return true
                 --范围划分法
@@ -283,6 +284,7 @@ function block_ip()
                 sIP = tonumber(ipToDecimal(string.sub(ip, 0, s - 1)))
                 eIP = tonumber(ipToDecimal(string.sub(ip, e + 1, string.len(ip))))
                 if numIP >= sIP and numIP <= eIP then
+                    wafLog(tostring(cIP),"IP黑名单拦截");
                     ngx.exit(403)
                     return true
                 end
@@ -290,7 +292,8 @@ function block_ip()
             elseif x ~= nil then
                 local ip_list = split(ip, "/")
                 if IpBelongToNetwork(IP2bin(cIP),IP2bin(ip_list[1]),ip_list[2]) then
-                    ngx.exit(403)
+                    wafLog(tostring(cIP),"IP黑名单拦截");
+                    ngx.exit(403);
                     return true
                 end
             end
