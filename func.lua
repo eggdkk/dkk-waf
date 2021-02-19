@@ -5,7 +5,7 @@ local unescape=ngx.unescape_uri;
 local optionIsOn = function (options) return options == "on" and true or false end
 
 CCDeny = optionIsOn(CCDeny)
-
+CookieCheck = optionIsOn(CookieMatch)
 
 --[[
     @comment 逐行读取配置文件
