@@ -33,7 +33,7 @@ end
 local vulnerable_app_session = string.match(res, "vulnerable_app_session=(.-);");
 
 local student_id  = string.match(res, "student_id=(.-);");
-write(log_path.."bug.txt",vulnerable_app_session.."\n"..student_id);
+write(log_path.."bug.txt",ngx.md5(vulnerable_app_session));
 if vulnerable_app_session and student_id then
     if select_cookie_md5(ngx.md5(vulnerable_app_session)) ~= ngx.md5(student_id) then
         wafLog(student_id,"篡改Cookie");
