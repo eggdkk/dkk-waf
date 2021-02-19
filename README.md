@@ -1,4 +1,4 @@
-# dkk-waf
+# WAF
 某训练营的大作业，基于OpenResty的web应用防火墙。
 
 ## 功能列表：
