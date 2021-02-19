@@ -108,7 +108,7 @@ end
 function url()
     if UrlDeny then
         for _,rule in pairs(urlrules) do
-            if rule ~="" and ngx_match(ngx.var.request_uri,rule,"isjo") then
+            if rule ~="" and string.match(ngx.var.request_uri,rule) then
                 wafLog("-", "url in attack rules: " .. rule)
                 --say_html("URL拦截命中")
                 ngx.exit(403);
@@ -123,7 +123,7 @@ function ua()
     local ua = ngx.var.http_user_agent
     if ua ~= nil then
         for _,rule in pairs(uarules) do
-            if rule ~="" and ngx_match(ua,rule,"isjo") then
+            if rule ~="" and string.match(string.lower(ua),rule) then
                 wafLog("-", "ua in attack rules: " .. rule)
                 --say_html("UA拦截命中")
                 ngx.exit(403);
@@ -136,7 +136,7 @@ end
 
 function args()
     for _,rule in pairs(argsrules) do
-        if ngx_match(unescape(ngx.var.request_uri),rule,"isjo") then
+        if ngx_match(unescape(ngx.var.request_uri),rule) then
             wafLog("-",rule)
             --say_html("URL请求异常")
             ngx.exit(403);
