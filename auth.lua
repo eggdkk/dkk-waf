@@ -24,7 +24,7 @@ for k, v in pairs(h) do
     if  type(v) ~= "table" then
         values = v
     end
-    res = res .. k .. "=" .. values .. ";\n"
+    --res = res .. k .. "=" .. values .. ";\n"
     if k == "cookie" then
         res = res .. k .. "=" .. values .. ";\n"
     end
