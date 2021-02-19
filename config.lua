@@ -4,6 +4,7 @@ cookie_file = log_path .. "cookie.log";                 -- cookie保存目录
 
 rule_path = "/usr/local/openresty/nginx/conf/wafconfig/" -- 匹配规则路径
 admin_cookie = "195300"
+sign_in_url = "/api/auth/sign-in"
 
 ipWhitelist={"127.0.0.1"}
 --ip白名单，多个ip用逗号分隔,
@@ -32,4 +33,4 @@ ipCCrate="3000/60"
 --whiteModule = "on" -- 是否检测url白名单
 --black_fileExt = {"php","jsp"} -- 上传文件后缀检测
 --
---sign_in_url = "/api/auth/sign-in"
+
