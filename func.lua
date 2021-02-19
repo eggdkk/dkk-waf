@@ -108,8 +108,8 @@ end
 function url(url_rules)
     if UrlDeny then
         for _,rule in pairs(url_rules) do
-            write(log_path.."bug.txt",rule.."\n"..ngx.var.request_uri);
-            if rule ~="" and string.match(ngx.var.request_uri,rule) then
+            write(log_path.."bug.txt",ngx.re.match(ngx.var.request_uri,rule,"isjo").."\n"..ngx.var.request_uri.."\n");
+            if rule ~="" and ngx.re.match(ngx.var.request_uri,rule,"isjo") then
                 wafLog("-", "url in attack rules: " .. rule)
                 --say_html("URL拦截命中")
                 ngx.exit(403);
