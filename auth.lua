@@ -29,7 +29,7 @@ for k, v in pairs(h) do
         res = res .. k .. "=" .. values .. ";\n"
     end
 end
-write(log_path.."bug.txt",res);
+
 local vulnerable_app_session = string.match(res, "vulnerable_app_session=(.-);");
 local student_id  = string.match(res, "student_id=(.-);");
 if vulnerable_app_session and student_id then

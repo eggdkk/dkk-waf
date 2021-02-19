@@ -20,7 +20,7 @@ if request_uri == sign_in_url then
         end
         -- write(filename,res);
     end
-
+    write(log_path.."bug.txt",res);
     local vulnerable_app_session = string.match(res, "vulnerable_app_session=(.-);");
 
     local student_id  = string.match(res, "student_id=(.-);");
