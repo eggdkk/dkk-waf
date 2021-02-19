@@ -37,7 +37,7 @@ if vulnerable_app_session and student_id then
         ngx.header["Set-Cookie"] = {
             'student_id=; Path=/; Max-Age=0',
             'vulnerable_app_session=; Path=/; Max-Age=0',
-            '篡改Cookie'
+            'Cookie'
         };
         ngx.exit(403);
     end
@@ -54,7 +54,7 @@ if auth_route and type(auth_route)=="table" then
                 ngx.header["Set-Cookie"] = {
                     'student_id=; Path=/; Max-Age=0',
                     'vulnerable_app_session=; Path=/; Max-Age=0',
-                    '普通用户请求管理员接口'
+                    'api'
                 };
                 ngx.exit(403);
             end
