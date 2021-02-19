@@ -1,6 +1,6 @@
 require "config";
 
-local ngx_match = ngx.re.match;
+local ngx_match = string.match;
 local unescape=ngx.unescape_uri;
 local optionIsOn = function (options) return options == "on" and true or false end
 
@@ -100,7 +100,7 @@ function wafLog(data, rule_tag)
         else
             line = '{"id":'..time..',"realIp":"'..realIp .. '", "time":"' .. local_time .. '","request_method":"' .. request_method .. '", "url":"' .. url .. '","data":"' .. data .. '", "ruletag":"' .. rule_tag .. '"}\n';
         end
-        local filename = log_path .. "/response.log"
+        local filename = log_path .. "response.log"
         write(filename, line);
     end
 end

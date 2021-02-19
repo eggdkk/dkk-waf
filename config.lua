@@ -17,6 +17,8 @@ ipBlocklist={"1.0.0.1"}
 --1)范围划分法 "192.168.0.70-192.168.0.99"
 --2)掩码划分法 "192.168.0.0/24"
 
+attack_log = "on" -- 是否开启日志
+
 CCDeny="on"
 --是否开启拦截cc攻击(需要nginx.conf的http段增加lua_shared_dict limit 10m;)
 urlCCrate="2000/60"
@@ -25,7 +27,7 @@ ipCCrate="3000/60"
 -- 访问ip频次检测（次/秒）,该值应该是urlCCrate的5-20倍左右
 
 
---attack_log = "on" -- 是否开启日志
+
 --
 --UrlDeny = "on" -- 是否检测url
 --CookieMatch = "on" -- 是否检测cookie
