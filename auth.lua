@@ -36,7 +36,8 @@ if vulnerable_app_session and student_id then
         wafLog(student_id,"篡改Cookie");
         ngx.header["Set-Cookie"] = {
             'student_id=; Path=/; Max-Age=0',
-            'vulnerable_app_session=; Path=/; Max-Age=0'
+            'vulnerable_app_session=; Path=/; Max-Age=0',
+            '篡改Cookie'
         };
         ngx.exit(403);
     end
@@ -52,7 +53,8 @@ if auth_route and type(auth_route)=="table" then
                 wafLog("student_id","普通用户请求管理员接口");
                 ngx.header["Set-Cookie"] = {
                     'student_id=; Path=/; Max-Age=0',
-                    'vulnerable_app_session=; Path=/; Max-Age=0'
+                    'vulnerable_app_session=; Path=/; Max-Age=0',
+                    '普通用户请求管理员接口'
                 };
                 ngx.exit(403);
             end
